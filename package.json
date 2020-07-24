@@ -1,0 +1,28 @@
+{
+  "name": "laravel-mix-hash-length",
+  "version": "1.0.0",
+  "description": "Laravel Mix extension for globally adjusting hash length",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/daun/laravel-mix-hash-length.git"
+  },
+  "keywords": [
+    "laravel-mix",
+    "hash",
+    "versioning"
+  ],
+  "dependencies": {},
+  "peerDependencies": {
+    "laravel-mix": "^4.0.0"
+  },
+  "author": "Philipp Daun <daun@daun.ltd>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/daun/laravel-mix-hash-length/issues"
+  },
+  "homepage": "https://github.com/daun/laravel-mix-hash-length#readme"
+}
