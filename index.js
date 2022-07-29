@@ -3,7 +3,10 @@ const mix = require("laravel-mix");
 /**
  * Globally adjusting hash length
  */
+
 class HashLength {
+  fileLoaderPattern = new RegExp(`(^|\\${path.sep})file-loader(\\${path.sep}|$)`)
+
   constructor() {
     this.hashLength = null;
   }
@@ -29,8 +32,6 @@ class HashLength {
   webpackConfig(webpackConfig) {
     if (!this.hashLength) return;
 
-    const rules = this.findFileLoaderRules(webpackConfig);
-
     if (webpackConfig.output.filename) {
       webpackConfig.output.filename = this.adjustHashLength(
         webpackConfig.output.filename
@@ -41,6 +42,8 @@ class HashLength {
         webpackConfig.output.chunkFilename
       );
     }
+
+    const rules = this.findFileLoaderRules(webpackConfig);
 
     rules.forEach((module) => {
       const fileOptions = this.findFileNameOptions(module);
@@ -58,7 +61,7 @@ class HashLength {
     const { rules } = webpackConfig.module;
     const isFileLoader = (m) => {
       const loaders = m.loaders || m.use || [];
-      return m.loader === "file-loader" || loaders.find(isFileLoader);
+      return (m.loader || "").match(this.fileLoaderPattern) || loaders.find(isFileLoader);
     };
     return rules.filter(isFileLoader);
   }
@@ -81,14 +84,14 @@ class HashLength {
    *
    */
   adjustHashLength(filename) {
+    if (typeof filename === "function") {
+      return (path) => this.adjustHashLength(filename(path));
+    }
     if (typeof filename === "string") {
       return filename.replace(
         /\[(hash|chunkhash|contenthash)(:\d+)?\]/,
         `[$1:${this.hashLength}]`
       );
-    }
-    if (typeof filename === "function") {
-      return (path) => this.adjustHashLength(filename(path));
     }
     return filename;
   }
