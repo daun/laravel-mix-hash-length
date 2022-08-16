@@ -1,6 +1,6 @@
 {
   "name": "laravel-mix-hash-length",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Laravel Mix extension for globally adjusting hash length",
   "main": "index.js",
   "scripts": {
